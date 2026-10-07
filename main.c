@@ -78,11 +78,11 @@ int main(void) {
   }
 
   // Sum and Average
-  int sum = 0;
+  long sum = 0;
   for (int i = 0; i < count; i++) {
     sum += numbers[i];
   }
-  printf("\nSum: %d\n", sum);
+  printf("\nSum: %ld\n", sum);
   int avg = (double)sum / count;
   printf("Average: %d\n", avg);
 
