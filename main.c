@@ -9,16 +9,26 @@ int main(void) {
   long numbers[100];
   int count = 0;
 
-  for (;;) {
-    fputs("Enter a series of numbers (max. 100): ", stdout);
+  puts("Let The Program Find Your Needs!\n");
 
-    if (!fgets(buf, sizeof(buf), stdin)) {
-      return 0;
+  for (;;) {
+    fputs("Enter a series of numbers: ", stdout);
+
+    if (fgets(buf, sizeof(buf), stdin) != NULL) {
+      if (strchr(buf, '\n') == NULL) {
+        // Consume remaining characters until newline or EOF
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF)
+          ;
+      } else {
+        // Remove the newline for cleaner string processing
+        buf[strcspn(buf, "\n")] = '\0';
+      }
     }
 
     char *endptr;
     char *ptr = buf;
-    int success = 0;
+    int success = 1;
 
     // Parse integers until newline or end of string
     while (*ptr) {
@@ -28,11 +38,10 @@ int main(void) {
       }
 
       if (*ptr == '\n' || *ptr == '\0') {
-        success = 1;
         break;
       }
 
-      if (!isdigit((unsigned char)*ptr)) {
+      if (!isdigit((unsigned char)*ptr) && *ptr != '-' && *ptr != '+') {
         puts("Only accepts numbers and space/commas to separate them.\n");
         success = 0;
         break;
@@ -51,7 +60,7 @@ int main(void) {
       }
 
       if (count >= 100) {
-        puts("Number can't exceed 100.\n");
+        puts("Total data can't exceed 100.\n");
         success = 0;
         break;
       }
@@ -59,7 +68,8 @@ int main(void) {
       numbers[count++] = value;
       ptr = endptr; // Move to next character after the number
     }
-    if (success) {
+
+    if (success && count > 0) { // check if user only press enter (\n)
       break;
     } else {
       memset(numbers, 0, sizeof(numbers));
@@ -67,13 +77,44 @@ int main(void) {
     };
   }
 
+  // Sum and Average
+  int sum = 0;
   for (int i = 0; i < count; i++) {
-    if (i == count - 1) {
-      printf("%ld", numbers[i]);
-      break;
-    }
-    printf("%ld, ", numbers[i]);
+    sum += numbers[i];
   }
+  printf("\nSum: %d\n", sum);
+  int avg = (double)sum / count;
+  printf("Average: %d\n", avg);
+
+  // Min and Max
+  long min = numbers[0];
+  long max = numbers[0];
+  for (int i = 0; i < count; i++) {
+    if (numbers[i] < min) {
+      min = numbers[i];
+    }
+    if (numbers[i] > max) {
+      max = numbers[i];
+    }
+  }
+  printf("\nMin: %ld\n", min);
+  printf("Max: %ld\n", max);
+
+  // Odds and Evens
+  fputs("\nOdd numbers: ", stdout);
+  for (int i = 0; i < count; i++) {
+    if (numbers[i] % 2 != 0) {
+      printf("%ld, ", numbers[i]);
+    }
+  }
+  fputs("\nEven numbers: ", stdout);
+  for (int i = 0; i < count; i++) {
+    if (numbers[i] % 2 != 1) {
+      printf("%ld, ", numbers[i]);
+    }
+  }
+
+  puts("\n\nThanks for using this Program!");
 
   return 0;
 }
