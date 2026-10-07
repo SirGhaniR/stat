@@ -15,19 +15,28 @@ int main(void) {
   puts("Let The Program Find Your Needs!\n");
 
   for (;;) {
+    int overflow = 0;
+
     fputs("Enter a series of numbers: ", stdout);
 
-    if (fgets(buf, sizeof(buf), stdin) != NULL) {
-      if (strchr(buf, '\n') == NULL) {
-        // Consume remaining characters until newline or EOF
-        int c;
-        while ((c = getchar()) != '\n' && c != EOF)
-          ;
-        break;
-      } else {
-        // Remove the newline for cleaner string processing
-        buf[strcspn(buf, "\n")] = '\0';
-      }
+    if (fgets(buf, sizeof(buf), stdin) == NULL) {
+      puts("\nError: End of file.");
+      return 1;
+    }
+
+    if (strchr(buf, '\n') == NULL) {
+      overflow = 1;
+      int c;
+      while ((c = getchar()) != '\n' && c != EOF)
+        ;
+    } else {
+      buf[strcspn(buf, "\n")] = '\0';
+    }
+
+    if (overflow) {
+      puts("Input line too long.\n");
+      count = 0;
+      continue;
     }
 
     char *endptr;
@@ -87,7 +96,7 @@ int main(void) {
   }
   printf("\nSum: %ld\n", sum);
   double avg = (double)sum / count;
-  printf("Average: %.2f\n", avg);
+  printf("Average: %.3f\n", avg);
 
   // Min and Max
   long min = numbers[0];
