@@ -83,8 +83,8 @@ int main(void) {
     sum += numbers[i];
   }
   printf("\nSum: %ld\n", sum);
-  int avg = (double)sum / count;
-  printf("Average: %d\n", avg);
+  double avg = (double)sum / count;
+  printf("Average: %.2f\n", avg);
 
   // Min and Max
   long min = numbers[0];
@@ -103,13 +103,13 @@ int main(void) {
   // Odds and Evens
   fputs("\nOdd numbers: ", stdout);
   for (int i = 0; i < count; i++) {
-    if (numbers[i] % 2 != 0) {
+    if (numbers[i] & 1) {
       printf("%ld, ", numbers[i]);
     }
   }
   fputs("\nEven numbers: ", stdout);
   for (int i = 0; i < count; i++) {
-    if (numbers[i] % 2 != 1) {
+    if ((numbers[i] & 1) == 0) {
       printf("%ld, ", numbers[i]);
     }
   }
