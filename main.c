@@ -4,9 +4,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define MAX_NUMBERS 100
+#define BUFFER_SIZE 1024
+
 int main(void) {
-  char buf[1024];
-  long numbers[100];
+  char buf[BUFFER_SIZE];
+  long numbers[MAX_NUMBERS];
   int count = 0;
 
   puts("Let The Program Find Your Needs!\n");
@@ -20,6 +23,7 @@ int main(void) {
         int c;
         while ((c = getchar()) != '\n' && c != EOF)
           ;
+        break;
       } else {
         // Remove the newline for cleaner string processing
         buf[strcspn(buf, "\n")] = '\0';
@@ -59,7 +63,7 @@ int main(void) {
         break;
       }
 
-      if (count >= 100) {
+      if (count >= MAX_NUMBERS) {
         puts("Total data can't exceed 100.\n");
         success = 0;
         break;
@@ -69,12 +73,11 @@ int main(void) {
       ptr = endptr; // Move to next character after the number
     }
 
-    if (success && count > 0) { // check if user only press enter (\n)
+    if (success && count > 0) { // if \n is the only input, count = 0, resets
       break;
     } else {
-      memset(numbers, 0, sizeof(numbers));
       count = 0;
-    };
+    }
   }
 
   // Sum and Average
@@ -89,7 +92,7 @@ int main(void) {
   // Min and Max
   long min = numbers[0];
   long max = numbers[0];
-  for (int i = 0; i < count; i++) {
+  for (int i = 1; i < count; i++) {
     if (numbers[i] < min) {
       min = numbers[i];
     }
