@@ -53,7 +53,7 @@ int main(void) {
         ptr++;
       }
 
-      if (*ptr == '\n' || *ptr == '\0') {
+      if (*ptr == '\0') {
         break;
       }
 
