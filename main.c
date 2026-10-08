@@ -34,13 +34,16 @@ int main(void) {
     } else {
       // Remove the newline for cleaner string processing
       buf[strcspn(buf, "\n")] = '\0';
-      puts("Input was empty.\n");
-      continue;
     }
 
     if (overflow) {
       puts("Input line too long.\n");
       count = 0;
+      continue;
+    }
+
+    if (buf[0] == '\0') {
+      puts("Input was empty.\n");
       continue;
     }
 
