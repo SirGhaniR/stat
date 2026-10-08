@@ -20,6 +20,7 @@ int main(void) {
 
     fputs("Enter a series of numbers: ", stdout);
 
+    fflush(stdout);
     if (fgets(buf, sizeof(buf), stdin) == NULL) {
       puts("\nError: End of file.");
       return 1;
