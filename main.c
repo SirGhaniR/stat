@@ -25,7 +25,7 @@ int main(void) {
       return 1;
     }
 
-    if (strchr(buf, '\n') == NULL) {
+    if (strchr(buf, '\n') == NULL) { // Search for \n char in buf
       overflow = 1;
       // Consume remaining characters until newline or EOF
       int c;
@@ -34,6 +34,8 @@ int main(void) {
     } else {
       // Remove the newline for cleaner string processing
       buf[strcspn(buf, "\n")] = '\0';
+      puts("Input was empty.\n");
+      continue;
     }
 
     if (overflow) {
@@ -85,7 +87,7 @@ int main(void) {
       ptr = endptr; // Move to next character after the number
     }
 
-    if (success && count > 0) { // if \n is the only input, count = 0, resets
+    if (success) { // if \n is the only input, count = 0, resets
       break;
     } else {
       count = 0;
