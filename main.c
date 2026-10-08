@@ -1,5 +1,6 @@
 #include <ctype.h>
 #include <errno.h>
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -93,10 +94,24 @@ int main(void) {
 
   // Sum and Average
   long sum = 0;
+  int sum_overflow = 0;
   for (int i = 0; i < count; i++) {
+    if (sum >= 0) {
+      if (numbers[i] > (LONG_MAX - sum)) {
+        sum_overflow = 1;
+      }
+    } else {
+      if (numbers[i] < (LONG_MIN - sum)) {
+        sum_overflow = 1;
+      }
+    }
     sum += numbers[i];
   }
-  printf("\nSum: %ld\n", sum);
+  if (sum_overflow) {
+    puts("\nSum: Sum is too big/small to calculate.");
+  } else {
+    printf("\nSum: %ld\n", sum);
+  }
   double avg = (double)sum / count;
   printf("Average: %.3f\n", avg);
 
