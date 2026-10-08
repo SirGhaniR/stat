@@ -26,10 +26,12 @@ int main(void) {
 
     if (strchr(buf, '\n') == NULL) {
       overflow = 1;
+      // Consume remaining characters until newline or EOF
       int c;
       while ((c = getchar()) != '\n' && c != EOF)
         ;
     } else {
+      // Remove the newline for cleaner string processing
       buf[strcspn(buf, "\n")] = '\0';
     }
 
@@ -115,13 +117,13 @@ int main(void) {
   // Odds and Evens
   fputs("\nOdd numbers: ", stdout);
   for (int i = 0; i < count; i++) {
-    if (numbers[i] & 1) {
+    if (numbers[i] % 2 != 0) {
       printf("%ld, ", numbers[i]);
     }
   }
   fputs("\nEven numbers: ", stdout);
   for (int i = 0; i < count; i++) {
-    if ((numbers[i] & 1) == 0) {
+    if (numbers[i] % 2 == 0) {
       printf("%ld, ", numbers[i]);
     }
   }
