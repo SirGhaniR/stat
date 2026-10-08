@@ -138,12 +138,20 @@ int main(void) {
   fputs("\nOdd numbers: ", stdout);
   for (int i = 0; i < count; i++) {
     if (numbers[i] % 2 != 0) {
+      if (i + 2 == count) {
+        printf("%ld", numbers[i]);
+        break;
+      }
       printf("%ld, ", numbers[i]);
     }
   }
   fputs("\nEven numbers: ", stdout);
   for (int i = 0; i < count; i++) {
     if (numbers[i] % 2 == 0) {
+      if (i + 1 == count) {
+        printf("%ld", numbers[i]);
+        break;
+      }
       printf("%ld, ", numbers[i]);
     }
   }
